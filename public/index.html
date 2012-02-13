@@ -1,0 +1,50 @@
+<html>
+<head>
+
+<style type="text/css">
+body {
+  font-family: optima;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.pin {
+  margin-bottom: 18px;
+}
+</style>
+
+<!-- <script type="text/javascript" src="/nowjs/now.js"></script> -->
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+<script src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.js"></script>
+
+<script src="/base.js"></script>
+
+<title>firmata node</title>
+
+</head>
+<body>
+
+
+<div id="pins" data-bind="foreach: pins">
+  <div class="pin">
+    <div>pin: <span data-bind="text: name"></span></div>
+    <div>
+      mode: <span data-bind="text: mode().name"></span>
+      <select data-bind="options: supportedModes(), optionsText: 'name', value: mode"></select>
+    </div>
+    <div>
+      value:
+      <span data-bind="text: value"></span>
+      <div data-bind="if: mode().writeable">
+        <input type="range" data-bind="attr: {min: mode().range[0], max: mode().range[1]}, value: value"></input>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
