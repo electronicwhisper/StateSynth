@@ -56,9 +56,6 @@ model = {
   ]
 }
 
-pinModeReadable = (num) -> model.pinModes[num]
-
-
 
 
 makePin = (pinNumber) ->
