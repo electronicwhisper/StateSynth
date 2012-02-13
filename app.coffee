@@ -3,20 +3,17 @@ express = require('express')
 firmata = require('firmata')
 
 app = express.createServer()
-
 app.use(express.static(__dirname + '/public'))
+app.use require('connect-assets')()
+app.set('view options', {layout: false})
+
+
+
+app.get '/', (req, res) ->
+  res.render('index.jade')
 
 
 app.listen(3000)
-
-fs = require 'fs'
-coffee = require 'coffee-script'
-
-app.get '/:script.js', (req, res) ->
-  res.header 'Content-Type', 'application/x-javascript'
-  cs = fs.readFileSync "#{__dirname}/coffee/#{req.params.script}.coffee", "ascii"
-  js = coffee.compile cs 
-  res.send js
 
 
 
