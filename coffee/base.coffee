@@ -90,8 +90,6 @@ makePin = (pinNumber) ->
         console.log("send to server", pin.mode(), pin.value())
         socket.emit(pin.mode().writeable, pin.pinNumber, pin.value())
   
-  # pin.modeReadable = ko.computed () -> model.pinModes[pin.mode()]?.name
-  # pin.modeReadable = ko.computed () -> "asdf"
   
   pin
 

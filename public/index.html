@@ -32,15 +32,14 @@ body {
   <div class="pin">
     <div>pin: <span data-bind="text: name"></span></div>
     <div>
-      mode: <span data-bind="text: mode().name"></span>
+      mode:
       <select data-bind="options: supportedModes(), optionsText: 'name', value: mode"></select>
     </div>
     <div>
       value:
-      <span data-bind="text: value"></span>
-      <div data-bind="if: mode().writeable">
-        <input type="range" data-bind="attr: {min: mode().range[0], max: mode().range[1]}, value: value"></input>
-      </div>
+      <input type="text" data-bind="value: value, enable: mode().writeable"></input>
+      <input type="range" data-bind="attr: {min: mode().range[0], max: mode().range[1]}, value: value, enable: mode().writeable"></input>
+      
     </div>
   </div>
 </div>
