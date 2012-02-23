@@ -5,17 +5,37 @@ html
     
     script(src="/socket.io/socket.io.js")
     script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
-    script(src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.js")
+    // script(src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.js")
+    script(src="https://github.com/SteveSanderson/knockout/raw/master/build/output/knockout-latest.debug.js")
     
     != css('base')
     != js('base')
+    != js('positionable')
+    != js('dataflow')
+    != js('ui')
+    != js('arduino')
   body
     #pins(data-bind="foreach: pins")
       .pin
-        div pin:
+        div pin: 
           span(data-bind="text: name")
-        div mode:
+        div mode: 
           select(data-bind="options: supportedModes(), optionsText: 'name', value: mode")
-        div value:
+        div value: 
           input(type="text", data-bind="value: value, enable: mode().writeable")
           input(type="range", data-bind="attr: {min: mode().range[0], max: mode().range[1]}, value: value, enable: mode().writeable")
+    
+    #connections
+      svg(width="100%", height="100%", version="1.1")
+        g(data-bind="foreach: connections")
+          path(fill="none", stroke="red", stroke-width="2", data-bind="attr: {d: connection.pathD()}")
+    
+    
+    #funs(data-bind="foreach: funs")
+      .fun(data-bind="event: {mousedown: $root.ui.startDrag}, position: positionable.position, size: positionable.size")
+        .params(data-bind="foreach: fun.inputParams.concat(fun.outputParams)")
+          .param(data-bind="position: positionable.position")
+      //- .fun(data-bind="event: {mousedown: $root.ui.startDrag}, position: ui.position, size: ui.size")
+      //-   .params(data-bind="foreach: inputParams.concat(outputParams)")
+      //-     .param(data-bind="position: ui.position")
+        

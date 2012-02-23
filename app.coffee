@@ -25,36 +25,41 @@ board = null
 getSerialPorts = (callback) ->
   require('child_process').exec('ls /dev | grep usb', (err, stdout, stderr) ->
     ports = stdout.slice(0, -1).split("\n")
-    ports = ports.map (s) -> "/dev/"+s
+    ports = ports.filter((s) -> s != "").map((s) -> "/dev/"+s)
     callback(ports)
   )
 
 getSerialPorts (ports) ->
-  port = ports[0]
-  console.log port
-  board = new firmata.Board port, () ->
-    updatePins()
-    updateValues()
+  console.log(ports)
+  if ports.length > 0
+    port = ports[0]
+    console.log port
+    board = new firmata.Board port, () ->
+      updatePins()
+      updateValues()
+  else
+    console.log "No Arduino, fyi"
 
 
 updatePins = () ->
   io.sockets.emit("pins", board.pins)
 
 
-updateValuesTime = 100
+updateValuesTime = 50
 updateValues = () ->
   io.sockets.emit("values", board.pins.map (pin) -> pin.value)
   setTimeout(updateValues, updateValuesTime)
 
 
 io.sockets.on 'connection', (socket) ->
-  socket.emit("pins", board.pins)
-  
-  socket.on 'pinMode', (args...) ->
-    console.log("pinMode!", args)
-    board.pinMode(args...)
-  socket.on 'digitalWrite', (args...) ->
-    console.log("digitalWrite!", args)
-    board.digitalWrite(args...)
-  socket.on 'analogWrite', (args...) -> board.analogWrite(args...)
+  if board
+    socket.emit("pins", board.pins)
+    
+    socket.on 'pinMode', (args...) ->
+      console.log("pinMode!", args)
+      board.pinMode(args...)
+    socket.on 'digitalWrite', (args...) ->
+      console.log("digitalWrite!", args)
+      board.digitalWrite(args...)
+    socket.on 'analogWrite', (args...) -> board.analogWrite(args...)
 
