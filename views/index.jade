@@ -32,10 +32,6 @@ html
     
     
     #funs(data-bind="foreach: funs")
-      .fun(data-bind="event: {mousedown: $root.ui.startDrag}, position: positionable.position, size: positionable.size")
+      .fun(data-bind="event: {mousedown: $root.ui.startDrag}, positionable: true")
         .params(data-bind="foreach: fun.inputParams.concat(fun.outputParams)")
-          .param(data-bind="position: positionable.position")
-      //- .fun(data-bind="event: {mousedown: $root.ui.startDrag}, position: ui.position, size: ui.size")
-      //-   .params(data-bind="foreach: inputParams.concat(outputParams)")
-      //-     .param(data-bind="position: ui.position")
-        
+          .param(data-bind="positionable: true")

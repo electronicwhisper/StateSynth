@@ -33,3 +33,15 @@ makePositionable = (o, position, size) ->
 
 
 window.makePositionable = makePositionable
+
+
+
+ko.bindingHandlers.positionable = {
+  init: (element, valueAccessor, allBindingsAccessor, viewModel) ->
+    ko.computed () ->
+      pos = viewModel.positionable.position()
+      $(element).css({left: pos[0], top: pos[1]})
+    ko.computed () ->
+      size = viewModel.positionable.size()
+      $(element).css({width: size[0], height: size[1]})
+}
