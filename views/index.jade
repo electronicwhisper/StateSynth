@@ -4,16 +4,14 @@ html
     title StateSynth
     
     script(src="/socket.io/socket.io.js")
-    script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
-    // script(src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.js")
-    script(src="https://github.com/SteveSanderson/knockout/raw/master/build/output/knockout-latest.debug.js")
     
     != css('base')
-    != js('base')
-    != js('positionable')
-    != js('dataflow')
-    != js('ui')
-    != js('arduino')
+    
+    script(src="/application.js")
+    script
+      $(function () {
+        require("app").init();
+      });
   body
     #pins(data-bind="foreach: pins")
       .pin
@@ -32,6 +30,6 @@ html
     
     
     #funs(data-bind="foreach: funs")
-      .fun(data-bind="event: {mousedown: $root.ui.startDrag}, positionable: true")
+      .fun(data-bind="event: {mousedown: fun.startDrag}, positionable: true")
         .params(data-bind="foreach: fun.inputParams.concat(fun.outputParams)")
-          .param(data-bind="positionable: true")
+          .param(data-bind="event: {mousedown: param.startDrag, mouseup: param.stopDrag}, mousedownBubble: false, positionable: true")

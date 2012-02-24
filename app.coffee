@@ -1,12 +1,28 @@
 express = require('express')
 
+stitch  = require('stitch')
+
 firmata = require('firmata')
 
 app = express.createServer()
 app.use(express.static(__dirname + '/public'))
+
 app.use require('connect-assets')()
 app.set('view options', {layout: false})
 
+
+
+package = stitch.createPackage(
+  # Specify the paths you want Stitch to automatically bundle up
+  paths: [ __dirname + "/assets/js" ]
+
+  # Specify your base libraries
+  dependencies: [
+    __dirname + '/vendor/jquery-1.7.1.min.js'
+    __dirname + '/vendor/knockout-latest.debug.js'
+  ]
+)
+app.get "/application.js", package.createServer()
 
 
 app.get '/', (req, res) ->

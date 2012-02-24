@@ -1,13 +1,12 @@
 uiConfig = {
   paramSpacing: 20
-  paramSize: [4, 4]
+  paramSize: [6, 6]
 }
 
 
+makePositionable = require("positionable").makePositionable
 
-model.funs = ko.observableArray()
-model.connections = ko.observableArray()
-
+draggable = require("draggable")
 
 
 makeFun = (o, inputParamTypes, outputParamTypes) ->
@@ -21,6 +20,7 @@ makeFun = (o, inputParamTypes, outputParamTypes) ->
     a = if isInput then o.fun.inputParams else o.fun.outputParams
     (type, i) ->
       p = makeParam({}, type)
+      p.param.isInput(isInput)
       pos = ko.computed () ->
         [i*uiConfig.paramSpacing, if isInput then 0 else o.positionable.size()[1]-uiConfig.paramSize[1]]
       o.positionable.makeChild(p, pos, uiConfig.paramSize)
@@ -29,7 +29,9 @@ makeFun = (o, inputParamTypes, outputParamTypes) ->
   inputParamTypes.forEach mp(true)
   outputParamTypes.forEach mp(false)
   
-  model.funs.push(o)
+  
+  o.fun.startDrag = (target, e) ->
+    draggable.startDrag(target, e)
   
   o
 
@@ -38,8 +40,29 @@ makeFun = (o, inputParamTypes, outputParamTypes) ->
 
 makeParam = (o, type) ->
   o.param = {}
+  o.param.isInput = ko.observable()
   o.param.type = ko.observable(type)
   o.param.value = ko.observable()
+  
+  o.param.startDrag = (target, e) ->
+    placeholder = makePositionable({}, [e.clientX, e.clientY])
+    placeholder.origin = o
+    from = if o.param.isInput() then placeholder else o
+    to = if o.param.isInput() then o else placeholder
+    placeholderConnection = makeConnection({}, from, to)
+    
+    require("model").connections.push(placeholderConnection)
+    
+    draggable.startDrag placeholder, e, () ->
+      require("model").connections.remove(placeholderConnection)
+  
+  o.param.stopDrag = (target, e) ->
+    originParam = draggable.dragging()?.target.origin
+    if originParam && originParam.param.isInput() != o.param.isInput()
+      from = if originParam.param.isInput() then o else originParam
+      to = if originParam.param.isInput() then originParam else o
+      c = makeConnection({}, from, to)
+      require("model").connections.push(c)
   
   o
 
@@ -52,18 +75,17 @@ makeConnection = (o, from, to) ->
   o.connection.pathD = ko.computed () ->
     f = o.connection.from().positionable.center()
     t = o.connection.to().positionable.center()
-    "M#{f[0]},#{f[1]} C#{f[0]},#{(f[1]+t[1])/2} #{t[0]},#{(f[1]+t[1])/2} #{t[0]},#{t[1]}"
-  
-  model.connections.push(o)
+    
+    y1 = f[1] + Math.abs(f[1]-t[1])/2
+    y2 = t[1] - Math.abs(f[1]-t[1])/2
+    
+    "M#{f[0]},#{f[1]} C#{f[0]},#{y1} #{t[0]},#{y2} #{t[0]},#{t[1]}"
   
   o
 
 
 
-f1 = makeFun({}, [{}], [{}, {}])
-f2 = makeFun({}, [{}], [{}])
-f3 = makeFun({}, [{}, {}], [{}])
-
-makeConnection({}, f1.fun.outputParams[0], f2.fun.inputParams[0])
-makeConnection({}, f2.fun.outputParams[0], f3.fun.inputParams[0])
-makeConnection({}, f1.fun.outputParams[1], f3.fun.inputParams[1])
+module.exports = {
+  makeFun: makeFun
+  makeConnection: makeConnection
+}

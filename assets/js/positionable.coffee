@@ -32,10 +32,6 @@ makePositionable = (o, position, size) ->
   _makePositionable(o, false, position, size)
 
 
-window.makePositionable = makePositionable
-
-
-
 ko.bindingHandlers.positionable = {
   init: (element, valueAccessor, allBindingsAccessor, viewModel) ->
     ko.computed () ->
@@ -44,4 +40,8 @@ ko.bindingHandlers.positionable = {
     ko.computed () ->
       size = viewModel.positionable.size()
       $(element).css({width: size[0], height: size[1]})
+}
+
+module.exports = {
+  makePositionable: makePositionable
 }
