@@ -3,27 +3,43 @@ body {
   font-size: 12px;
   line-height: 1.5;
 }
-.pin {
-  margin-bottom: 18px;
-}
-.pin input[type=text] {
-  width: 40px;
-}
-.pin input[type=range] {
-  position: relative;
-  top: 4px;
-}
 
-
-.fun
-  position: absolute
-  background-color: rgba(200, 200, 200, 0.8)
-
-.param
-  position: absolute
-  background-color: #000
-
-svg
+#arduino
   position: absolute
   top: 0px
-  left: 0px
+  right: 0px
+  width: 260px
+  .pin {
+    margin-bottom: 18px;
+  }
+  .pin input[type=text] {
+    width: 40px;
+  }
+  .pin input[type=range] {
+    position: relative;
+    top: 4px;
+  }
+
+
+#dataflow
+  position: fixed
+  top: 0
+  left: 0
+  right: 260px
+  bottom: 0
+  .fun
+    position: absolute
+    background-color: rgba(200, 200, 200, 0.8)
+  
+  .param
+    position: absolute
+    background-color: #000
+    .value
+      position: absolute
+      left: 0px
+      top: 10px
+  
+  svg
+    position: absolute
+    top: 0px
+    left: 0px

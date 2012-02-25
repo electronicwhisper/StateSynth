@@ -22,6 +22,8 @@ ko.utils.wrapObservable = (value) ->
   if ko.isObservable(value) then value else ko.observable(value)
 
 
-model = {}
+model = {
+  tempLine: ko.observable()
+}
 
 module.exports = model

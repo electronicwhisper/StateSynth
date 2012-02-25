@@ -1,20 +1,12 @@
 
-_makePositionable = (o, initialParent, position=[0,0], size=[0,0]) ->
-  parent = ko.observable(initialParent)
-  
+makePositionable = (o, position=[0,0], size=[0,0]) ->
   o.positionable = {}
   
-  o.positionable.parent = ko.computed () -> parent() # read only
+  o.positionable.parent = ko.observable()
   o.positionable.position = ko.utils.wrapObservable(position)
   o.positionable.size = ko.utils.wrapObservable(size)
-  o.positionable.children = ko.observableArray() # TODO: should be read only
-  o.positionable.makeChild = (oChild, position, size) ->
-    _makePositionable(oChild, o, position, size)
-    o.positionable.children.push(oChild)
-  o.positionable.removeChild = (oChild) ->
-    # TODO
-  o.positionable.ownChild = (oChild) ->
-    # TODO
+  o.positionable.children = ko.observableArray()
+  
   o.positionable.absolutePosition = ko.computed () ->
     acc = [0, 0]
     i = o
@@ -28,9 +20,17 @@ _makePositionable = (o, initialParent, position=[0,0], size=[0,0]) ->
   
   o
 
-makePositionable = (o, position, size) ->
-  _makePositionable(o, false, position, size)
+makeParentChild = (parent, child) ->
+  prevParent = child.positionable.parent()
+  if prevParent != parent
+    if prevParent
+      removeParentChild(prevParent, child)
+    child.positionable.parent(parent)
+    parent.positionable.children.push(child)
 
+removeParentChild = (parent, child) ->
+  child.positionable.parent(false)
+  parent.positionable.children.remove(child)
 
 ko.bindingHandlers.positionable = {
   init: (element, valueAccessor, allBindingsAccessor, viewModel) ->
@@ -44,4 +44,6 @@ ko.bindingHandlers.positionable = {
 
 module.exports = {
   makePositionable: makePositionable
+  makeParentChild: makeParentChild
+  removeParentChild: removeParentChild
 }

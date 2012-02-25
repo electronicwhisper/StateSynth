@@ -1,3 +1,7 @@
+model = {}
+
+socket = require("app").socket
+
 model.pins = ko.observableArray()
 model.pinModes = [
   {
@@ -102,3 +106,13 @@ socket.on "values", (values) ->
     p = model.pins()[i]
     if !p.value()? || !p.mode().writeable
       p.value(value)
+
+
+
+
+
+
+
+module.exports = {
+  arduino: model
+}
