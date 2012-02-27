@@ -1,0 +1,7 @@
+hierarchical
+makeState
+put funs in state
+drag around state
+notion of active
+
+drag in pins from arduino

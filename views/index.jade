@@ -13,6 +13,14 @@ html
         require("app").init();
       });
   body
+    
+    script(type="text/html", id="fun-template")
+      .fun(data-bind="event: {mousedown: fun.startDrag}, positionable: true")
+        .params(data-bind="foreach: fun.params()")
+          .param(data-bind="event: {mousedown: param.startDrag, mouseup: param.stopDrag}, mousedownBubble: false, positionable: true")
+            .value(data-bind="text: param.value")
+    
+    
     #arduino(data-bind="with: arduino")
       #pins(data-bind="foreach: pins")
         .pin
@@ -25,16 +33,21 @@ html
             input(type="range", data-bind="attr: {min: mode().range[0], max: mode().range[1]}, value: value, enable: mode().writeable")
     
     #dataflow
-      #connections
-        svg(width="100%", height="100%", version="1.1")
-          g(data-bind="foreach: connections")
-            path(fill="none", stroke="red", stroke-width="2", data-bind="attr: {d: line.d()}")
-          g(data-bind="with: tempLine")
-            path(fill="none", stroke="red", stroke-width="2", data-bind="attr: {d: line.d()}")
-    
-    
-      #funs(data-bind="foreach: funs")
-        .fun(data-bind="event: {mousedown: fun.startDrag}, positionable: true")
-          .params(data-bind="foreach: fun.params()")
-            .param(data-bind="event: {mousedown: param.startDrag, mouseup: param.stopDrag}, mousedownBubble: false, positionable: true")
-              .value(data-bind="text: param.value")
+      #states(data-bind="foreach: states")
+        .state(data-bind="positionable: true, ellipse: true")
+      
+      svg(width="100%", height="100%", version="1.1")
+        //- g(data-bind="foreach: states")
+        //-   ellipse(fill="white", stroke="grey", stroke-width="2", data-bind="ellipse:true")
+        g(data-bind="foreach: connections")
+          path(fill="none", stroke="red", stroke-width="2", data-bind="attr: {d: line.d()}")
+        g(data-bind="with: tempLine")
+          path(fill="none", stroke="red", stroke-width="2", data-bind="attr: {d: line.d()}")
+      
+      
+      #funs(data-bind="template: {name: 'fun-template', foreach: funs}")
+      //- #funs(data-bind="foreach: funs")
+      //-   .fun(data-bind="event: {mousedown: fun.startDrag}, positionable: true")
+      //-     .params(data-bind="foreach: fun.params()")
+      //-       .param(data-bind="event: {mousedown: param.startDrag, mouseup: param.stopDrag}, mousedownBubble: false, positionable: true")
+      //-         .value(data-bind="text: param.value")

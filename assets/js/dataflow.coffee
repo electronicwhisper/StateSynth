@@ -78,7 +78,18 @@ makeConnection = (o, from, to) ->
 
 
 
+makeState = (o) ->
+  o.state = {}
+  o.state.states = ko.observableArray()
+  o.state.funs = ko.observableArray()
+  
+  require("positionable").makePositionable(o, [100, 100], [400, 400])
+  
+  o
+
+
 module.exports = {
+  makeState: makeState
   makeFun: makeFun
   makeParam: makeParam
   makeConnection: makeConnection

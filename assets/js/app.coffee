@@ -19,6 +19,7 @@ module.exports = {
       
       model.funs = ko.observableArray()
       model.connections = ko.observableArray()
+      model.states = ko.observableArray()
       
       
       do ->
@@ -39,6 +40,9 @@ module.exports = {
             pin.value(p.param.value())
         model.funs.push(f)
       
+      
+      do ->
+        model.states.push(require("dataflow").makeState({}))
       
       # f1 = makeFun({}, [makeParam({})], [makeParam({}), makeParam({})])
       # f2 = makeFun({}, [makeParam({})], [makeParam({})])

@@ -42,6 +42,26 @@ ko.bindingHandlers.positionable = {
       $(element).css({width: size[0], height: size[1]})
 }
 
+ko.bindingHandlers.ellipse = {
+  init: (element, valueAccessor, allBindingsAccessor, viewModel) ->
+    ko.computed () ->
+      size = viewModel.positionable.size()
+      $(element).css({"border-radius": "#{size[0] / 2}px / #{size[1] / 2}px"})
+}
+
+# ko.bindingHandlers.ellipse = {
+#   init: (element, valueAccessor, allBindingsAccessor, viewModel) ->
+#     ko.computed () ->
+#       pos = viewModel.positionable.position()
+#       size = viewModel.positionable.size()
+#       attr = {};
+#       attr.rx = size[0]/2;
+#       attr.ry = size[1]/2;
+#       attr.cx = pos[0] + attr.rx;
+#       attr.cy = pos[1] + attr.ry;
+#       $(element).attr(attr)
+# }
+
 module.exports = {
   makePositionable: makePositionable
   makeParentChild: makeParentChild
