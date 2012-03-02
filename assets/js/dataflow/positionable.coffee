@@ -1,13 +1,13 @@
 uiConfig = {
   paramSpacing: 20
-  paramSize: [6, 6]
+  paramSize: [8, 8]
 }
 
 
 makePositionable = require("../positionable").makePositionable
 
 makeFunPositionable = (o) ->
-  makePositionable(o, [Math.round(Math.random()*400), Math.round(Math.random()*400)], [300, 100])
+  makePositionable(o, [Math.round(Math.random()*400), Math.round(Math.random()*400)], [200, 50])
   
   # make params children of the fun
   ko.computed () ->
