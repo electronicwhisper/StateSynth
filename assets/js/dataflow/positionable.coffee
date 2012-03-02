@@ -7,7 +7,7 @@ uiConfig = {
 makePositionable = require("../positionable").makePositionable
 
 makeFunPositionable = (o) ->
-  makePositionable(o, [Math.round(Math.random()*600), Math.round(Math.random()*600)], [300, 100])
+  makePositionable(o, [Math.round(Math.random()*400), Math.round(Math.random()*400)], [300, 100])
   
   # make params children of the fun
   ko.computed () ->
@@ -24,7 +24,17 @@ makeFunPositionable = (o) ->
 makeParamPositionable = (o) ->
   makePositionable(o, [0,0], uiConfig.paramSize)
 
+
+
+makeStatePositionable = (o) ->
+  makePositionable(o, [100, 100], [900, 500])
+  ko.computed () ->
+    o.state.funs().forEach (f) ->
+      require("positionable").makeParentChild(o, f)
+  
+
 module.exports = {
   makeFunPositionable: makeFunPositionable
   makeParamPositionable: makeParamPositionable
+  makeStatePositionable: makeStatePositionable
 }
