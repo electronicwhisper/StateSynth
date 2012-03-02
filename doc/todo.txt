@@ -1,6 +1,12 @@
-hierarchical
-makeState
+z-index
 put funs in state
+preserve position in addChild removeChild (beware weird stack overflow)
+
+
+
+
+
+hierarchical
 drag around state
 notion of active
 

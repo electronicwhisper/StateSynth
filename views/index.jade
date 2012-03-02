@@ -15,7 +15,7 @@ html
   body
     
     script(type="text/html", id="fun-template")
-      .fun(data-bind="event: {mousedown: fun.startDrag}, positionable: true")
+      .fun(data-bind="event: {mousedown: fun.startDrag}, mousedownBubble: false, positionable: true")
         .params(data-bind="foreach: fun.params()")
           .param(data-bind="event: {mousedown: param.startDrag, mouseup: param.stopDrag}, mousedownBubble: false, positionable: true")
             .value(data-bind="text: param.value")
@@ -34,7 +34,9 @@ html
     
     #dataflow
       #states(data-bind="foreach: states")
-        .state(data-bind="positionable: true, ellipse: true")
+        .state(data-bind="positionable: true, event: {mousedown: state.startDrag}, mousedownBubble: false")
+          .background(style="border-radius: 20px")
+          .funs(data-bind="template: {name: 'fun-template', foreach: state.funs}")
       
       svg(width="100%", height="100%", version="1.1")
         //- g(data-bind="foreach: states")
@@ -45,9 +47,4 @@ html
           path(fill="none", stroke="red", stroke-width="2", data-bind="attr: {d: line.d()}")
       
       
-      #funs(data-bind="template: {name: 'fun-template', foreach: funs}")
-      //- #funs(data-bind="foreach: funs")
-      //-   .fun(data-bind="event: {mousedown: fun.startDrag}, positionable: true")
-      //-     .params(data-bind="foreach: fun.params()")
-      //-       .param(data-bind="event: {mousedown: param.startDrag, mouseup: param.stopDrag}, mousedownBubble: false, positionable: true")
-      //-         .value(data-bind="text: param.value")
+      //- #funs(data-bind="template: {name: 'fun-template', foreach: funs}")

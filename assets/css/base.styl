@@ -30,14 +30,17 @@ body {
   
   .state
     position: absolute
-    background-color: rgba(230, 230, 230, 0.8)
     overflow: hidden
-  .state:hover
-    background-color: #f00
+    .background
+      background-color: rgba(230, 230, 230, 0.8)
+      width: 100%
+      height: 100%
+      z-index: 10
   
   .fun
     position: absolute
     background-color: rgba(200, 200, 200, 0.8)
+    z-index: 30
   
   .param
     position: absolute
@@ -52,3 +55,4 @@ body {
     pointer-events: none
     top: 0px
     left: 0px
+    z-index: 20

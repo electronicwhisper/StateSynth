@@ -22,6 +22,13 @@ module.exports = {
       model.states = ko.observableArray()
       
       
+      
+      
+      
+      do ->
+        model.states.push(require("dataflow").makeState({}))
+      
+      
       do ->
         p = makeParam({})
         f = makeFun({}, [], [p])
@@ -29,8 +36,9 @@ module.exports = {
           pin = model.arduino.pins()[14]
           if pin
             p.param.value(pin.value())
-        model.funs.push(f)
-      
+        # model.funs.push(f)
+        model.states()[0].state.funs.push(f)
+
       do ->
         p = makeParam({})
         f = makeFun({}, [p], [])
@@ -38,11 +46,9 @@ module.exports = {
           pin = model.arduino.pins()[3]
           if pin
             pin.value(p.param.value())
-        model.funs.push(f)
+        # model.funs.push(f)
+        model.states()[0].state.funs.push(f)
       
-      
-      do ->
-        model.states.push(require("dataflow").makeState({}))
       
       # f1 = makeFun({}, [makeParam({})], [makeParam({}), makeParam({})])
       # f2 = makeFun({}, [makeParam({})], [makeParam({})])

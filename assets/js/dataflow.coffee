@@ -83,7 +83,10 @@ makeState = (o) ->
   o.state.states = ko.observableArray()
   o.state.funs = ko.observableArray()
   
-  require("positionable").makePositionable(o, [100, 100], [400, 400])
+  require("positionable").makePositionable(o, [100, 100], [600, 400])
+  
+  o.state.startDrag = (target, e) ->
+    draggable.startDrag(target, e)
   
   o
 
