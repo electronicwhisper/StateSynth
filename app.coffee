@@ -20,6 +20,9 @@ package = stitch.createPackage(
   dependencies: [
     __dirname + '/vendor/jquery-1.7.1.min.js'
     __dirname + '/vendor/knockout-latest.debug.js'
+    
+    __dirname + '/vendor/jquery.ui.position.js'
+    __dirname + '/vendor/jquery.contextMenu.js'
   ]
 )
 app.get "/application.js", package.createServer()

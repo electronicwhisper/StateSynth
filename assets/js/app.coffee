@@ -23,6 +23,15 @@ module.exports = {
       
       
       
+      $.contextMenu({
+        selector: ".fun"
+        items: {
+          foo: {name: "Foo", callback: (key, opt) -> console.log("Foo!")},
+          bar: {name: "Bar", callback: (key, opt) -> console.log("Bar!")}
+        }
+      })
+      
+      
       do ->
         
         g = require("dataflow").makeState({})
