@@ -25,12 +25,24 @@ makeParentChild = (parent, child) ->
   if prevParent != parent
     if prevParent
       removeParentChild(prevParent, child)
+    
+    # preserve absolute position
+    pos = child.positionable.absolutePosition()
+    parentPos = parent.positionable.absolutePosition()
+    
     child.positionable.parent(parent)
     parent.positionable.children.push(child)
+    
+    child.positionable.position([pos[0] - parentPos[0], pos[1] - parentPos[1]])
 
 removeParentChild = (parent, child) ->
+  # preserve absolute position
+  pos = child.positionable.absolutePosition()
+  
   child.positionable.parent(false)
   parent.positionable.children.remove(child)
+  
+  child.positionable.position(pos)
 
 ko.bindingHandlers.positionable = {
   init: (element, valueAccessor, allBindingsAccessor, viewModel) ->

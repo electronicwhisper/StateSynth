@@ -1,13 +1,15 @@
-z-index
-put funs in state
-preserve position in addChild removeChild (beware weird stack overflow)
 
+global parent state
+drag funs into and out of states
 
-
-
-
-hierarchical
-drag around state
 notion of active
 
+
+
+
 drag in pins from arduino
+
+
+delete funs, states, connections
+
+select multiple
