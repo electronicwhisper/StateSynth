@@ -27,10 +27,13 @@ makeParamPositionable = (o) ->
 
 
 makeStatePositionable = (o) ->
-  makePositionable(o, [100, 100], [900, 500])
+  makePositionable(o, [100, 100], [600, 400])
   ko.computed () ->
     o.state.funs().forEach (f) ->
       require("positionable").makeParentChild(o, f)
+  ko.computed () ->
+    o.state.states().forEach (s) ->
+      require("positionable").makeParentChild(o, s)
   
 
 module.exports = {

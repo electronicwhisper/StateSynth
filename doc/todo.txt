@@ -4,7 +4,10 @@ drag funs into and out of states
 
 notion of active
 
+context menu
 
+
+resize states
 
 
 drag in pins from arduino
