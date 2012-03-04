@@ -1,4 +1,25 @@
+notion of active
+css for active/inactive
+activate/deactivate state
+connections active/inactive
+connections - if input inactive and output active, don't transmit
 
+
+
+
+demo
+  show arduino pins working
+  drag pins in
+  connect with wires
+  smooth
+  states
+  activate/deactivate manually
+  transition timer
+
+
+
+
+make drag actions only on left click
 
 drag funs into and out of states
 
