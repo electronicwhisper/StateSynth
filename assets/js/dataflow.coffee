@@ -14,6 +14,7 @@ makeFun = (o, inputParams=[], outputParams=[]) ->
   o.fun.inputParams = ko.observableArray(inputParams)
   o.fun.outputParams = ko.observableArray(outputParams)
   o.fun.active = ko.observable(false)
+  o.fun.parentState = ko.observable()
   
   o.fun.inputParams().forEach (p) -> p.param.isInput(true)
   o.fun.outputParams().forEach (p) -> p.param.isInput(false)
@@ -30,7 +31,15 @@ makeFun = (o, inputParams=[], outputParams=[]) ->
   
   
   o.fun.startDrag = (target, e) ->
-    draggable.startDrag(target, e)
+    o.fun.parentState().state.funs.remove(o)
+    o.fun.parentState(false)
+    
+    require("positionable").removeParentChild(o)
+    
+    require("model").tempFun(o)
+    
+    draggable.startDrag target, e, () ->
+      require("model").tempFun(false)
   
   o
 
@@ -90,6 +99,10 @@ makeState = (o) ->
   o.state.funs = ko.observableArray()
   o.state.active = ko.observable(false)
   
+  # make sure children know their parent
+  ko.computed () ->
+    o.state.funs().forEach (f) -> f.fun.parentState(o)
+  
   ko.computed () ->
     active = o.state.active()
     o.state.funs().forEach (f) -> f.fun.active(active)
@@ -101,6 +114,11 @@ makeState = (o) ->
   
   o.state.startDrag = (target, e) ->
     draggable.startDrag(target, e)
+  
+  o.state.stopDrag = (target, e) ->
+    f = draggable.dragging()?.target
+    if f && f.fun && !f.fun.parentState()
+      o.state.funs.push(f)
   
   o
 

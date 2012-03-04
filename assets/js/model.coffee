@@ -24,6 +24,7 @@ ko.utils.wrapObservable = (value) ->
 
 model = {
   tempLine: ko.observable()
+  tempFun: ko.observable()
 }
 
 module.exports = model

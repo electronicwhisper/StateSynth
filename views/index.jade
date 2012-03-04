@@ -23,7 +23,7 @@ html
             .value(data-bind="text: param.value")
     
     script(type="text/html", id="state-template")
-      .state(data-bind="css: {active: state.active}, positionable: true, event: {mousedown: state.startDrag}, mousedownBubble: false")
+      .state(data-bind="css: {active: state.active}, positionable: true, event: {mousedown: state.startDrag, mouseup: state.stopDrag}, mousedownBubble: false")
         .directhover
           .background()
           .funs(data-bind="template: {name: 'fun-template', foreach: state.funs}")
@@ -45,6 +45,8 @@ html
     
     #dataflow
       #states(data-bind="template: {name: 'state-template', foreach: states}")
+      div(data-bind="with: tempFun", style="pointer-events: none")
+        div(data-bind="template: {name: 'fun-template'}")
       
       
       svg(width="100%", height="100%", version="1.1")
