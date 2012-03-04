@@ -1,6 +1,3 @@
-notion of active
-css for active/inactive
-activate/deactivate state
 connections active/inactive
 connections - if input inactive and output active, don't transmit
 

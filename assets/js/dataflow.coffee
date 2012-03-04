@@ -13,12 +13,17 @@ makeFun = (o, inputParams=[], outputParams=[]) ->
   o.fun = {}
   o.fun.inputParams = ko.observableArray(inputParams)
   o.fun.outputParams = ko.observableArray(outputParams)
+  o.fun.active = ko.observable(false)
   
   o.fun.inputParams().forEach (p) -> p.param.isInput(true)
   o.fun.outputParams().forEach (p) -> p.param.isInput(false)
   
   o.fun.params = ko.computed () ->
     o.fun.inputParams().concat(o.fun.outputParams())
+  
+  ko.computed () ->
+    active = o.fun.active()
+    o.fun.params().forEach (p) -> p.param.active(active)
   
   require("dataflow/positionable").makeFunPositionable(o)
   
@@ -37,6 +42,7 @@ makeParam = (o, type) ->
   o.param.isInput = ko.observable()
   o.param.type = ko.observable(type)
   o.param.value = ko.observable()
+  o.param.active = ko.observable()
   
   require("dataflow/positionable").makeParamPositionable(o)
   
@@ -82,6 +88,14 @@ makeState = (o) ->
   o.state = {}
   o.state.states = ko.observableArray()
   o.state.funs = ko.observableArray()
+  o.state.active = ko.observable(false)
+  
+  ko.computed () ->
+    active = o.state.active()
+    o.state.funs().forEach (f) -> f.fun.active(active)
+  
+  # TODO: set child states active/inactive
+  
   
   require("dataflow/positionable").makeStatePositionable(o)
   

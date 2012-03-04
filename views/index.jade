@@ -23,9 +23,9 @@ html
             .value(data-bind="text: param.value")
     
     script(type="text/html", id="state-template")
-      .state(data-bind="positionable: true, event: {mousedown: state.startDrag}, mousedownBubble: false")
+      .state(data-bind="css: {active: state.active}, positionable: true, event: {mousedown: state.startDrag}, mousedownBubble: false")
         .directhover
-          .background(style="border-radius: 20px")
+          .background()
           .funs(data-bind="template: {name: 'fun-template', foreach: state.funs}")
         .states(data-bind="template: {name: 'state-template', foreach: state.states}")
     
