@@ -45,32 +45,32 @@ module.exports = {
         
         model.states.push(g)
         
-        h = require("dataflow").makeState({})
-        g.state.states.push(h)
-        g.state.states.push(require("dataflow").makeState({}))
-        
-        
-        do ->
-          p = makeParam({})
-          f = makeFun({}, [], [p])
-          ko.computed () ->
-            pin = model.arduino.pins()[14]
-            if pin
-              p.param.value(pin.value())
-          # model.funs.push(f)
-          f.positionable.position([200, 200])
-          h.state.funs.push(f)
-
-        do ->
-          p = makeParam({})
-          f = makeFun({}, [p], [])
-          ko.computed () ->
-            pin = model.arduino.pins()[3]
-            if pin
-              pin.value(p.param.value())
-          # model.funs.push(f)
-          f.positionable.position([400, 400])
-          h.state.funs.push(f)
+        # h = require("dataflow").makeState({})
+        # g.state.states.push(h)
+        # g.state.states.push(require("dataflow").makeState({}))
+        # 
+        # 
+        # do ->
+        #   p = makeParam({})
+        #   f = makeFun({}, [], [p])
+        #   ko.computed () ->
+        #     pin = model.arduino.pins()[14]
+        #     if pin
+        #       p.param.value(pin.value())
+        #   # model.funs.push(f)
+        #   f.positionable.position([200, 200])
+        #   h.state.funs.push(f)
+        # 
+        # do ->
+        #   p = makeParam({})
+        #   f = makeFun({}, [p], [])
+        #   ko.computed () ->
+        #     pin = model.arduino.pins()[3]
+        #     if pin
+        #       pin.value(p.param.value())
+        #   # model.funs.push(f)
+        #   f.positionable.position([400, 400])
+        #   h.state.funs.push(f)
       
       
         # f1 = makeFun({}, [makeParam({})], [makeParam({}), makeParam({})])
