@@ -67,11 +67,11 @@
 }
 
 .context-menu-submenu:after {
-    content: ">";
-    color: #666;
+    content: "▶";
+    color: #777;
     position: absolute;
     top: 0;
-    right: 3px;
+    right: 6px;
     z-index: 1;
 }
 
