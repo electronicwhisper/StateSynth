@@ -74,7 +74,7 @@ makePin = (pinNumber) ->
   ko.computed () ->
     if pin.mode().writeable
       if pin.value()?
-        console.log("send to server", pin.mode(), pin.value())
+        # console.log("send to server", pin.mode(), pin.value())
         socket.emit(pin.mode().writeable, pin.pinNumber, pin.value())
   
   

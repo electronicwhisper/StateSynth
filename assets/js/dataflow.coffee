@@ -75,7 +75,6 @@ makeParam = (o, type) ->
       from = if originParam.param.isInput() then o else originParam
       to = if originParam.param.isInput() then originParam else o
       c = makeConnection({}, from, to)
-      require("model").connections.push(c)
       # TODO: if there's already a connection, don't make a new one
   
   o
@@ -87,6 +86,11 @@ makeConnection = (o, from, to) ->
   o.connection.to = ko.observable(to)
   
   require("dataflow/line").makeLine(o, o.connection.from, o.connection.to)
+  
+  o.connection.active = ko.computed () ->
+    o.connection.from().param.active() && o.connection.to().param.active()
+  
+  require("model").connections.push(o)
   
   ko.computed () ->
     to.param.value(from.param.value())

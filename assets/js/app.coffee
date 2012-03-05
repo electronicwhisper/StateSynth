@@ -1,5 +1,7 @@
+socket = io.connect('http://localhost')
+
 module.exports = {
-  socket: io.connect('http://localhost')
+  socket: socket
   init: () ->
     
     model = require("model")
@@ -14,7 +16,6 @@ module.exports = {
     do ->
       makeFun = require("dataflow").makeFun
       makeParam = require("dataflow").makeParam
-      makeConnection = require("dataflow").makeConnection
       
       
       model.funs = ko.observableArray()

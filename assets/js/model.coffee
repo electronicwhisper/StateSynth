@@ -7,6 +7,26 @@ ko.extenders.numeric = (target, precision) ->
       target(if isNaN(parsedValue) then 0 else parsedValue)
   })
 
+
+ko.utils.toggleDomNodeCssClass = (node, className, shouldHaveClass) ->
+  classNames = (if node.className.baseVal? then node.className.baseVal || "" else node.className || "").split(/\s+/)
+  
+  hasClass = ko.utils.arrayIndexOf(classNames, className) >= 0
+  
+  if shouldHaveClass && !hasClass
+    classNames.push(className)
+  else if hasClass && !shouldHaveClass
+    classNames = classNames.filter (c) -> c != className
+  
+  if shouldHaveClass != hasClass
+    if node.className.baseVal
+      node.className.baseVal = classNames.join(" ")
+    else
+      node.className = classNames.join(" ")
+
+
+
+
 ko.bindingHandlers.position = {
   update: (element, valueAccessor, allBindingsAccessor, viewModel) ->
     val = ko.utils.unwrapObservable(valueAccessor())
