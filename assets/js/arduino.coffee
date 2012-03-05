@@ -74,8 +74,9 @@ makePin = (pinNumber) ->
   ko.computed () ->
     if pin.mode().writeable
       if pin.value()?
+        boundedValue = Math.max(pin.mode().range[0], Math.min(pin.mode().range[1], pin.value()))
         # console.log("send to server", pin.mode(), pin.value())
-        socket.emit(pin.mode().writeable, pin.pinNumber, pin.value())
+        socket.emit(pin.mode().writeable, pin.pinNumber, boundedValue)
   
   
   pin.startDrag = (target, e) ->
