@@ -15,8 +15,6 @@ demo
 
 make drag actions only on left click
 
-notion of active
-
 context menu
   state
     activate/deactivate

@@ -18,6 +18,7 @@ html
     
     script(type="text/html", id="fun-template")
       .fun(data-bind="event: {mousedown: fun.startDrag}, mousedownBubble: false, positionable: true")
+        .body(data-bind="text: fun.name")
         .params(data-bind="foreach: fun.params()")
           .param(data-bind="event: {mousedown: param.startDrag, mouseup: param.stopDrag}, mousedownBubble: false, positionable: true")
             .value(data-bind="text: param.value")

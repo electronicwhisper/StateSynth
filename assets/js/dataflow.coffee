@@ -11,6 +11,7 @@ draggable = require("draggable")
 
 makeFun = (o, inputParams=[], outputParams=[]) ->
   o.fun = {}
+  o.fun.name = ko.observable("")
   o.fun.inputParams = ko.observableArray(inputParams)
   o.fun.outputParams = ko.observableArray(outputParams)
   o.fun.active = ko.observable(false)

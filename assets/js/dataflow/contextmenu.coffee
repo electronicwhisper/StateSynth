@@ -8,6 +8,7 @@ init = () ->
   
   $.contextMenu({
     selector: ".state"
+    zIndex: 1000
     items: {
       activate: {name: "Activate", callback: () ->
         o = ko.dataFor(this[0])
@@ -35,6 +36,7 @@ init = () ->
   
   $.contextMenu({
     selector: ".fun"
+    zIndex: 1000
     items: {
       debug: {name: "Debug", callback: () ->
         o = ko.dataFor(this[0])
@@ -46,6 +48,7 @@ init = () ->
   
   $.contextMenu({
     selector: ".connection"
+    zIndex: 1000
     items: {
       debug: {name: "Debug", callback: () ->
         o = ko.dataFor(this[0])

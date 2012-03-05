@@ -93,6 +93,7 @@ makePin = (pinNumber) ->
       ko.computed () ->
         p.param.value(pin.value())
     
+    f.fun.name("Pin #{pin.name()}")
     f.positionable.position([e.clientX, e.clientY])
     
     require("model").tempFun(f)
