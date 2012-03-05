@@ -1,7 +1,4 @@
-connections active/inactive
-connections - if input inactive and output active, don't transmit
-
-
+disposable
 
 
 demo
@@ -30,7 +27,6 @@ replace css hover with js mechanism
 resize states
 
 
-drag in pins from arduino
 on/off pin
 slider pin
 

@@ -27,7 +27,7 @@ makeParamPositionable = (o) ->
 
 
 makeStatePositionable = (o) ->
-  makePositionable(o, [100, 100], [600, 400])
+  makePositionable(o, [100, 100], [400, 400])
   ko.computed () ->
     o.state.funs().forEach (f) ->
       require("positionable").makeParentChild(o, f)

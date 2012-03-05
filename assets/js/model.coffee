@@ -8,6 +8,7 @@ ko.extenders.numeric = (target, precision) ->
   })
 
 
+# TODO: submit patch to get this back into knockout https://github.com/SteveSanderson/knockout/blob/master/src/utils.js
 ko.utils.toggleDomNodeCssClass = (node, className, shouldHaveClass) ->
   classNames = (if node.className.baseVal? then node.className.baseVal || "" else node.className || "").split(/\s+/)
   

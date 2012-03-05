@@ -39,7 +39,7 @@ body {
     position: absolute
     overflow: hidden
     border-radius: 20px
-    opacity: 0.5
+    opacity: 0.2
     -webkit-transition: opacity 0.5s, box-shadow 0.5s
     &.active
       opacity: 1.0
@@ -82,8 +82,11 @@ body {
       stroke: red
       stroke-width: 2
       fill: none
+      opacity: 0.2
     .connections
       path
         pointer-events: auto
+        &.active
+          opacity: 1.0
         &:hover
           stroke-width: 4

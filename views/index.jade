@@ -34,14 +34,15 @@ html
     
     #arduino(data-bind="with: arduino")
       #pins(data-bind="foreach: pins")
-        .pin
-          div pin: 
-            span(data-bind="text: name")
-          div mode: 
-            select(data-bind="options: supportedModes(), optionsText: 'name', value: mode")
-          div value: 
-            input(type="text", data-bind="value: value, enable: mode().writeable")
-            input(type="range", data-bind="attr: {min: mode().range[0], max: mode().range[1]}, value: value, enable: mode().writeable")
+        div(data-bind="if: supportedModes().length > 0")
+          .pin(data-bind="event: {mousedown: startDrag}, mousedownBubble: false")
+            div pin: 
+              span(data-bind="text: name")
+            div mode: 
+              select(data-bind="options: supportedModes(), optionsText: 'name', value: mode, event: {mousedown: function (){return true;}}, mousedownBubble: false")
+            div value: 
+              input(type="text", data-bind="value: value, enable: mode().writeable, event: {mousedown: function (){return true;}}, mousedownBubble: false")
+              input(type="range", data-bind="attr: {min: mode().range[0], max: mode().range[1]}, value: value, enable: mode().writeable, event: {mousedown: function (){return true;}}, mousedownBubble: false")
     
     #dataflow
       #states(data-bind="template: {name: 'state-template', foreach: states}")
@@ -53,7 +54,7 @@ html
         //- g(data-bind="foreach: states")
         //-   ellipse(fill="white", stroke="grey", stroke-width="2", data-bind="ellipse:true")
         g.connections(data-bind="foreach: connections")
-          path(data-bind="css: {active: connection.active}, attr: {d: line.d()}")
+          path.connection(data-bind="css: {active: connection.active}, attr: {d: line.d()}")
         g(data-bind="with: tempLine")
           path(data-bind="attr: {d: line.d()}")
       

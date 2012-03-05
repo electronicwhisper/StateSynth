@@ -78,6 +78,29 @@ makePin = (pinNumber) ->
         socket.emit(pin.mode().writeable, pin.pinNumber, pin.value())
   
   
+  pin.startDrag = (target, e) ->
+    if e.which != 1 then return true
+    
+    # make the Fun
+    if pin.mode().writeable
+      p = require("dataflow").makeParam({})
+      f = require("dataflow").makeFun({}, [p], [])
+      ko.computed () ->
+        pin.value(p.param.value())
+    else
+      p = require("dataflow").makeParam({})
+      f = require("dataflow").makeFun({}, [], [p])
+      ko.computed () ->
+        p.param.value(pin.value())
+    
+    f.positionable.position([e.clientX, e.clientY])
+    
+    require("model").tempFun(f)
+    
+    require("draggable").startDrag f, e, () ->
+      require("model").tempFun(false)
+  
+  
   pin
 
 

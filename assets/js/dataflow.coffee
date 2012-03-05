@@ -93,7 +93,9 @@ makeConnection = (o, from, to) ->
   require("model").connections.push(o)
   
   ko.computed () ->
-    to.param.value(from.param.value())
+    # TODO: this should probably propagate unless from is inactive and to is active
+    if o.connection.active()
+      to.param.value(from.param.value())
   
   o
 

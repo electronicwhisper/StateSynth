@@ -29,6 +29,17 @@ init = () ->
       }
     }
   })
+  
+  $.contextMenu({
+    selector: ".connection"
+    items: {
+      debug: {name: "Debug", callback: () ->
+        o = ko.dataFor(this[0])
+        window.debug = o
+        console.log o
+      }
+    }
+  })
 
 
 module.exports = {
