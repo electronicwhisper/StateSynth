@@ -37,6 +37,7 @@ module.exports = {
       do ->
         
         g = require("dataflow").makeState({})
+        g.state.active(true)
         
         g.positionable.position([0,0])
         g.positionable.size([$(document).width(), $(document).height()])

@@ -31,6 +31,7 @@ makeFun = (o, inputParams=[], outputParams=[]) ->
   
   
   o.fun.startDrag = (target, e) ->
+    if e.which != 1 then return true
     o.fun.parentState().state.funs.remove(o)
     o.fun.parentState(false)
     
@@ -56,6 +57,7 @@ makeParam = (o, type) ->
   require("dataflow/positionable").makeParamPositionable(o)
   
   o.param.startDrag = (target, e) ->
+    if e.which != 1 then return true
     placeholder = makePositionable({}, [e.clientX, e.clientY])
     placeholder.origin = o
     from = if o.param.isInput() then placeholder else o
@@ -113,6 +115,7 @@ makeState = (o) ->
   require("dataflow/positionable").makeStatePositionable(o)
   
   o.state.startDrag = (target, e) ->
+    if e.which != 1 then return true
     draggable.startDrag(target, e)
   
   o.state.stopDrag = (target, e) ->
